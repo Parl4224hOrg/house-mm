@@ -1,4 +1,4 @@
-name: SMM Deployment CI
+name: PMM Deployment CI
 
 on:
   push:
