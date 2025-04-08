@@ -1216,12 +1216,12 @@ export class GameController {
                     console.error(e);
                 }
                 message = await finalChannel.send({components: [initialSubmit(), initialSubmitServer()],
-                    embeds: [await teamsEmbed(this.users, this.matchNumber, this.queueId, this.mapData!, this.sides, this.data)],
+                    embeds: [await teamsEmbed(this.users, this.matchNumber, this.queueId, this.mapData!, this.sides)],
                     content: `${serverMessage}. This match might be played on the server titled: \`SMM Match-${this.matchNumber}\`\n`
                 });
             } else {
                 message = await finalChannel.send({components: [initialSubmit()],
-                    embeds: [await teamsEmbed(this.users, this.matchNumber, this.queueId, this.mapData!, this.sides, this.data)],
+                    embeds: [await teamsEmbed(this.users, this.matchNumber, this.queueId, this.mapData!, this.sides)],
                     content: `${serverMessage}`
                 });
             }
