@@ -9,19 +9,19 @@ import tokens from "../tokens";
 export const register: Command = {
     data: new SlashCommandBuilder()
         .setName('register')
-        .setDescription("Register an oculus name to display")
+        .setDescription("Register a steam id 64")
         .addStringOption(new SlashCommandStringOption()
-            .setName('name')
-            .setDescription("Name to register")
+            .setName('id')
+            .setDescription("Id to register")
             .setRequired(true)),
     run: async (interaction, data) => {
         try {
             const dbUser = await getUserByUser(interaction.user, data);
             let registered = true;
-            if (dbUser.oculusName == null) {
+            if (dbUser.steamId == null) {
                 registered = false;
             }
-            dbUser.oculusName = interaction.options.getString('name', true).replace("<@", "").replace(">", "");
+            dbUser.steamId = interaction.options.getString('id', true);
             await updateUser(dbUser, data);
             if (!registered) {
                 const member = await interaction.guild!.members.fetch(interaction.user);
@@ -31,7 +31,7 @@ export const register: Command = {
                     content: `You have registered please go to <#${tokens.RegionSelect}> to select your region`
                 });
             } else {
-                await interaction.reply({ephemeral: true, content: "You have updated your registered name"})
+                await interaction.reply({ephemeral: true, content: "You have updated your registered id"})
             }
         } catch (e) {
             await logError(e, interaction);

@@ -401,9 +401,6 @@ export class Data {
             dbUser.name = user.username;
             await updateUser(dbUser, this);
         }
-        if (!dbUser.oculusName) {
-            return {success: false, message: "You need to set a name using `/register` before queueing"};
-        }
         if (!dbUser.region) {
             return {success: false, message: `You must set a region in <#${tokens.RegionSelect}> before you can play`}
         }

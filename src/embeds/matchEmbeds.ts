@@ -76,9 +76,9 @@ export const teamsEmbed = async (users: GameUser[], matchNumber: number, queue: 
     for (let user of users) {
         const dbUser = await getUserById(user.dbId, data);
         if (user.team == 0) {
-            teamA += `<@${user.discordId}>:${dbUser.oculusName}\n`
+            teamA += `<@${user.discordId}>\n`
         } else {
-            teamB += `<@${user.discordId}>:${dbUser.oculusName}\n`
+            teamB += `<@${user.discordId}>\n`
         }
     }
 

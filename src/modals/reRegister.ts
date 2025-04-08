@@ -16,9 +16,9 @@ export const reRegister: Modal = {
         .setComponents([
             new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
                 new TextInputBuilder()
-                    .setCustomId('name')
-                    .setLabel("Oculus Name (case-sensitive)")
-                    .setPlaceholder('pavlovPlayer')
+                    .setCustomId('id')
+                    .setLabel("SteamId64")
+                    .setPlaceholder('76561197960287930')
                     .setMinLength(1)
                     .setStyle(TextInputStyle.Short)
                     .setRequired(true)
@@ -26,13 +26,13 @@ export const reRegister: Modal = {
         ]),
     run: async (interaction, data) => {
         try {
-            const name = interaction.fields.getTextInputValue('name');
+            const name = interaction.fields.getTextInputValue('id');
             const dbUser = await getUserByUser(interaction.user, data);
-            dbUser.oculusName = name.replace("<@", "").replace(">", "");
+            dbUser.steamId = name;
             await updateUser(dbUser, data);
             await interaction.reply({
                 ephemeral: true,
-                content: "You have updated your registered name",
+                content: "You have updated your registered id",
             });
         } catch (e) {
             await logError(e, interaction);

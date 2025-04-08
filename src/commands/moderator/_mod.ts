@@ -7,7 +7,6 @@ import {actions} from "./actions";
 import {adjustMMR} from "./adjustMMR";
 import {cooldown} from "./cooldown";
 import {easyTime} from "./easyTime";
-import {findUser} from "./findUser";
 import {forceAbandon} from "./forceAbandon";
 import {forceScore} from "./forceScore";
 import {freeze} from "./freeze";
@@ -31,7 +30,7 @@ import {lates} from "./lates";
 import {lateRatio} from "./lateRatio";
 import {nextMapPool} from "./nextMapPool";
 
-const subCommandListTemp: SubCommand[] = [actions, adjustMMR, cooldown, easyTime, findUser, forceAbandon, forceScore, freeze, mapPlay, nullify,
+const subCommandListTemp: SubCommand[] = [actions, adjustMMR, cooldown, easyTime, forceAbandon, forceScore, freeze, mapPlay, nullify,
     rankDist, removeCooldown, reverseCooldown, scoreDist, setMMR, setRegion, transferUser, warn, warnings, warnRemove, mute, toggleReferee, lates,
     lateRatio, nextMapPool];
 let SubCommandMap: Collection<string, SubCommand> = new Collection<string, SubCommand>();
@@ -49,7 +48,6 @@ export const _mod: Command = {
         .addSubcommand(adjustMMR.data)
         .addSubcommand(cooldown.data)
         .addSubcommand(easyTime.data)
-        .addSubcommand(findUser.data)
         .addSubcommand(forceAbandon.data)
         .addSubcommand(forceScore.data)
         .addSubcommand(freeze.data)

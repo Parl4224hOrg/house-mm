@@ -120,7 +120,7 @@ export const getCheckBanMessage = async (user: UserInt, data: Data) => {
     if (user.frozen) {
         message += "\nYou are frozen from queueing due to a pending ticket";
     }
-    message += `\nRegistered Name: ${user.oculusName}\n`
+    message += `\nRegistered Name: ${user.steamId}\n`
     if (user.muteUntil < 0) {
         message += "You are muted indefinitely";
     } else if (time > user.muteUntil) {

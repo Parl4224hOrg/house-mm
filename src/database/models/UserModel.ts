@@ -17,12 +17,10 @@ export interface UserInt extends Document {
     lastBan: number;
     banCounterAbandon: number;
     banCounterFail: number;
-    oculusName: string;
+    steamId: string;
     dmMatch: boolean;
     dmQueue: boolean;
     dmAuto: boolean;
-    lastReduction: number;
-    gamesPlayedSinceReduction: number;
     lastReductionAbandon: number;
     gamesPlayedSinceReductionAbandon: number;
     lastReductionFail: number;
@@ -30,7 +28,6 @@ export interface UserInt extends Document {
     requeue: boolean;
     frozen: boolean;
     region: Regions;
-    games: ObjectId[];
     muteUntil: number;
     lates: number;
     lateTimes: number[];
@@ -46,11 +43,10 @@ export const UserSchema = new Schema({
     lastBan: Number,
     banCounterAbandon: Number,
     banCounterFail: Number,
-    oculusName: String,
+    steamId: String,
     dmMatch: Boolean,
     dmQueue: Boolean,
     dmAuto: Boolean,
-    lastReduction: Number,
     gamesPlayedSinceReduction: Number,
     lastReductionAbandon: Number,
     gamesPlayedSinceReductionAbandon: Number,
@@ -62,7 +58,6 @@ export const UserSchema = new Schema({
         type: String,
         enum: ["NAE", "NAW", "EUE", "EUW", "APAC"]
     },
-    games: [Schema.Types.ObjectId],
     muteUntil: Number,
     lates: Number,
     lateTimes: [Number],

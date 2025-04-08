@@ -18,9 +18,9 @@ export const register: Modal = {
         .setComponents([
             new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
                 new TextInputBuilder()
-                    .setCustomId('name')
-                    .setLabel("Oculus Name (case-sensitive)")
-                    .setPlaceholder('pavlovPlayer')
+                    .setCustomId('id')
+                    .setLabel("SteamId64")
+                    .setPlaceholder('76561197960287930')
                     .setMinLength(1)
                     .setStyle(TextInputStyle.Short)
                     .setRequired(true)
@@ -28,15 +28,15 @@ export const register: Modal = {
         ]),
     run: async (interaction, data) => {
         try {
-            const name = interaction.fields.getTextInputValue('name');
+            const name = interaction.fields.getTextInputValue('id');
             const dbUser = await getUserByUser(interaction.user, data);
-            dbUser.oculusName = name.replace("<@", "").replace(">", "");
+            dbUser.steamId = name;
             await updateUser(dbUser, data);
             const member = await interaction.guild!.members.fetch(interaction.user);
             await member.roles.add(tokens.Player);
             await interaction.reply({
                 ephemeral: true,
-                content: `Go to <#${tokens.RegionSelect}> to select a region (required)\nGo to <#${tokens.SNDReadyChannel}> to ready up or use \`/ready 5v5\`\nTo change your registered name use \`/register\` or the button above`,
+                content: `Go to <#${tokens.RegionSelect}> to select a region (required)\nGo to <#${tokens.SNDReadyChannel}> to ready up or use \`/ready 5v5\`\nTo change your registered id use \`/register\` or the button above`,
             });
         } catch (e) {
             await logError(e, interaction);

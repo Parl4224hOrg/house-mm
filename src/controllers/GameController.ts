@@ -356,9 +356,9 @@ export class GameController {
                         const lateUserMentions: string[] = [];
                         for (let user of this.users) {
                             const dbUser = await getUserById(user.dbId, this.data);
-                            if (dbUser && !this.joinedPlayers.has(dbUser.oculusName)) {
+                            if (dbUser && !this.joinedPlayers.has(dbUser.steamId)) {
                                 const logChannel = await this.client.channels.fetch(tokens.LogChannel) as TextChannel;
-                                await logChannel.send(`User ${dbUser.oculusName} is late.`);
+                                await logChannel.send(`User ${dbUser.steamId} is late.`);
                                 lateUserMentions.push(`<@${user.discordId}>`);
                             }
                         }
@@ -372,9 +372,9 @@ export class GameController {
                         const lateUserMentions: string[] = [];
                         for (let user of this.users) {
                             const dbUser = await getUserById(user.dbId, this.data);
-                            if (dbUser && !this.joinedPlayers.has(dbUser.oculusName)) {
+                            if (dbUser && !this.joinedPlayers.has(dbUser.steamId)) {
                                 const logChannel = await this.client.channels.fetch(tokens.LogChannel) as TextChannel;
-                                await logChannel.send(`User ${dbUser.oculusName} is late.`);
+                                await logChannel.send(`User ${dbUser.steamId} is late.`);
                                 lateUserMentions.push(`<@${user.discordId}>`);
                             }
                         }
@@ -389,9 +389,9 @@ export class GameController {
                         if (this.serverSetup) {
                             for (let user of this.users) {
                                 const dbUser = await getUserById(user.dbId, this.data);
-                                if (dbUser && !this.joinedPlayers.has(dbUser.oculusName)) {
+                                if (dbUser && !this.joinedPlayers.has(dbUser.steamId)) {
                                     const logChannel = await this.client.channels.fetch(tokens.LogChannel) as TextChannel;
-                                    await logChannel.send(`User ${dbUser.oculusName} is late.`);
+                                    await logChannel.send(`User ${dbUser.steamId} is late.`);
                                     lateUsers.push(user);
                                     user.isLate = true;
                                 }
@@ -443,7 +443,7 @@ export class GameController {
                             if (!found) {
                                 await LateModel.create({
                                     user: gameUser.discordId,
-                                    oculusName: dbUser.oculusName,
+                                    steamId: dbUser.steamId,
                                     joinTime: moment().unix(),
                                     channelGenTime: this.finalGenTime,
                                     matchId: this.matchNumber,
@@ -458,7 +458,7 @@ export class GameController {
                         for (let user of RefreshList.PlayerList) {
                             for (let gameUser of this.users.filter(user => user.isLate && !user.hasBeenGivenLate)) {
                                 let dbUser = await getUserById(gameUser.dbId, this.data);
-                                if (user.UniqueId == dbUser.oculusName) {
+                                if (user.UniqueId == dbUser.steamId) {
                                     gameUser.hasBeenGivenLate = true;
                                 }
                             }
@@ -479,7 +479,7 @@ export class GameController {
                                 for (let user of RefreshList.PlayerList) {
                                     let found = false;
                                     for (let dbUser of dbUsers) {
-                                        if (dbUser.oculusName == user.UniqueId) {
+                                        if (dbUser.steamId == user.UniqueId) {
                                             found = true;
                                             const playerInfo = await this.server.inspectPlayer(user.UniqueId);
                                             for (let gameUser of this.users) {
