@@ -1,7 +1,6 @@
 import {EmbedBuilder} from "discord.js";
 import {GameUser} from "../interfaces/Game";
 import {GameInt} from "../database/models/GameModel";
-import {getUserById} from "../modules/getters/getUser";
 import {GameController} from "../controllers/GameController";
 import {Data} from "../data";
 import {MapInt} from "../database/models/MapModel";
@@ -67,14 +66,13 @@ export const matchConfirmEmbed = (scores: number[]) => {
     return embed.toJSON();
 }
 
-export const teamsEmbed = async (users: GameUser[], matchNumber: number, queue: string, map: MapInt, sides: string[], data: Data) => {
+export const teamsEmbed = async (users: GameUser[], matchNumber: number, queue: string, map: MapInt, sides: string[]) => {
     const embed = new EmbedBuilder()
 
     let teamA = '';
     let teamB = '';
 
     for (let user of users) {
-        const dbUser = await getUserById(user.dbId, data);
         if (user.team == 0) {
             teamA += `<@${user.discordId}>\n`
         } else {
