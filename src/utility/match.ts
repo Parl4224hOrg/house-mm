@@ -6,29 +6,6 @@ import {logInfo} from "../loggers";
 import {MapData} from "../interfaces/Internal";
 import mapModel from "../database/models/MapModel";
 
-export const registerMaps = (data: Data, maps: string[]) => {
-    const mapData = data.getQueue().getMapData();
-    const toAdd: string[] = [];
-    for (let map of maps) {
-        let found = false;
-        for (let mapCheck of mapData) {
-            if (mapCheck.mapName == map) {
-                found = true;
-            }
-        }
-        if (!found) {
-            toAdd.push(map);
-        }
-    }
-    for (let map of toAdd) {
-        mapData.push({
-            mapName: map,
-            lastGame: 0,
-        })
-    }
-    mapData.forEach((map, i) => {if (!maps.includes(map.mapName)) mapData.splice(i, 1)})
-}
-
 export const getMapsDB = async (limit: number = tokens.VoteSize) => {
     return mapModel.find({active: true}).sort({lastPlayed: 1}).limit(limit);
 }
@@ -37,50 +14,7 @@ export const getMapData = async (map: string) => {
     return mapModel.findOne({name: map});
 }
 
-export const getOrderedMaps = (data: Data, log: boolean = false): MapData[] => {
-    const mapData = data.getQueue().getMapData();
-    let mapStr = "";
-    for (let map of mapData) {
-        mapStr += `\n${map.mapName} : ${map.lastGame}`;
-    }
-    if (log) {
-        logInfo(`Maps Pre sort:${mapStr}`, data.getClient());
-    }
-    // Sort to get least recent first
-    mapData.sort((a, b) => a.lastGame - b.lastGame);
-    mapStr = "";
-    for (let map of mapData) {
-        mapStr += `\n${map.mapName} : ${map.lastGame}`;
-    }
-    if (log) {
-        logInfo(`Maps Post sort:${mapStr}`, data.getClient());
-    }
-    return mapData;
-}
-
-export const getMaps = (data: Data) => {
-    const mapData = getOrderedMaps(data, true);
-    const maps: string[] = [];
-    for (let i = 0; i < tokens.VoteSize; i++) {
-        maps.push(mapData[i].mapName);
-    }
-    logInfo(`Selected Maps:\n${maps}`, data.getClient()).then();
-    return maps;
-}
-
 export const addLastPlayedMap = async (data: Data, map: string, matchNumber: number) => {
-    const mapData = data.getQueue().getMapData();
-    let found = false;
-    for (let mapCheck of mapData) {
-        if (mapCheck.mapName == map) {
-            mapCheck.lastGame = matchNumber;
-            found = true;
-        }
-    }
-    if (!found) {
-        mapData.push({mapName: map, lastGame: matchNumber});
-    }
-
     const mapDoc = await mapModel.findOne({name: map});
     if (mapDoc) {
         mapDoc.lastPlayed = matchNumber;

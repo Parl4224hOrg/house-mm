@@ -16,7 +16,9 @@ export const echo: Command = {
         try {
             const message = interaction.options.getString('message', true);
             await interaction.reply({ephemeral: true, content: "Sending message"});
-            await interaction.channel!.send(message);
+            if (interaction.channel!.isSendable()) {
+                await interaction.channel.send(message)
+            }
         } catch (e) {
             await logError(e, interaction);
         }

@@ -57,10 +57,6 @@ export class QueueController {
         this.inQueue = users.concat(this.inQueue);
     }
 
-    public getMapData() {
-        return this.mapData;
-    }
-
     async load(data: string) {
         const parsed = JSON.parse(data);
         this.inQueue = parsed.inQueue;

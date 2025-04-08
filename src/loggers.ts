@@ -1,4 +1,4 @@
-import {Client, Colors, EmbedBuilder, EmbedField, Interaction, TextChannel} from "discord.js";
+import {ButtonComponent, Client, Colors, EmbedBuilder, EmbedField, Interaction, TextChannel} from "discord.js";
 import tokens from './tokens';
 
 
@@ -85,14 +85,17 @@ export async function logError(error: any, interaction: Interaction) {
                 value: `\`\`\`${interaction.customId}\`\`\``,
                 inline: true,
             }, {
-                name: "buttonLabel",
-                value: `\`\`\`${interaction.component.label}\`\`\``,
-                inline: true,
-            }, {
                 name: "userId",
                 value: `\`\`\`${interaction.user.id}\`\`\``,
                 inline: true,
             },);
+            if (interaction.component instanceof ButtonComponent) {
+                fields.push({
+                    name: "buttonLabel",
+                    value: `\`\`\`${interaction.component.label}\`\`\``,
+                    inline: true,
+                })
+            }
         } catch (e) {
             await logWarn("warn", interaction.client);
         }

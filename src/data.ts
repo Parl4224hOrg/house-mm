@@ -19,7 +19,6 @@ import {getStats} from "./modules/getters/getStats";
 import {getRank, roleRemovalCallback} from "./utility/ranking";
 import {updateUser} from "./modules/updaters/updateUser";
 import {GameServer} from "./server/server";
-import {registerMaps} from "./utility/match";
 import serializer from "./serializers/serializer";
 import MapTestModel from "./database/models/MapTestModel";
 import mapTestModel from "./database/models/MapTestModel";
@@ -55,7 +54,14 @@ export class Data {
     constructor(client: Client) {
         this.client = client
         this.FILL_SND = new QueueController(this, client, "FILL");
-        for (let server of tokens.Servers) {
+        const servers: {
+            ip: string,
+            port: number,
+            password: string,
+            name: string,
+            id: string,
+        }[] = tokens.Servers;
+        for (let server of servers) {
             this.servers.push(new GameServer(server.ip, server.port, server.password, server.name, Regions.NAE, server.id));
         }
     }
@@ -213,7 +219,6 @@ export class Data {
                 }
             }
         }
-        registerMaps(this, tokens.MapPool);
         this.tickLoop.start();
         this.roleUpdate.start();
         this.banCounter.start();
