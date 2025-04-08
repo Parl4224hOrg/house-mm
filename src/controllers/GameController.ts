@@ -1,11 +1,11 @@
 import mongoose, {ObjectId} from "mongoose";
-import {ChannelType, Client, Collection, EmbedBuilder, Guild, TextChannel} from "discord.js";
+import {ChannelType, Client, Collection, EmbedBuilder, Guild, TextChannel, StageInstancePrivacyLevel} from "discord.js";
 import {getGameById} from "../modules/getters/getGame";
 import moment from "moment/moment";
 import {processMMR} from "../utility/processMMR";
 import {updateGame} from "../modules/updaters/updateGame";
 import {getGuildMember} from "../utility/discordGetters";
-import {getAcceptPerms, getMatchPerms} from "../utility/channelPerms";
+import {getAcceptPerms, getMatchPerms, getStagePerms} from "../utility/channelPerms";
 import tokens from "../tokens";
 import {acceptView} from "../views/acceptView";
 import {abandon, punishment} from "../utility/punishment";
@@ -124,8 +124,10 @@ export class GameController {
     voteChannelsGen = false;
     teamAChannelId = '';
     teamARoleId = '';
+    teamAVCid = '';
     teamBChannelId = '';
     teamBRoleId = '';
+    teamBVCid = ''
     voteA1MessageId = '';
     voteB1MessageId = '';
     voteA2MessageId = '';
@@ -995,6 +997,38 @@ export class GameController {
                 }
             );
             this.teamBChannelId = teamBChannel.id;
+
+            const teamAVC = await this.guild.channels.create({
+                name: `Team A-${this.matchNumber}`,
+                type: ChannelType.GuildStageVoice,
+                permissionOverwrites: getStagePerms(teamARole),
+                position: 0,
+                parent: tokens.MatchCategory,
+                reason: 'Create vc for team a',
+            });
+            this.teamAVCid = teamAVC.id;
+
+            const teamBVC = await this.guild.channels.create({
+                name: `Team B-${this.matchNumber}`,
+                type: ChannelType.GuildStageVoice,
+                permissionOverwrites: getStagePerms(teamBRole),
+                position: 0,
+                parent: tokens.MatchCategory,
+                reason: 'Create vc for team b',
+            });
+            this.teamBVCid = teamBVC.id;
+
+            await teamAVC.createStageInstance({
+                privacyLevel: StageInstancePrivacyLevel.GuildOnly,
+                sendStartNotification: false,
+                topic: `Team A-${this.matchNumber}`,
+            })
+
+            await teamBVC.createStageInstance({
+                privacyLevel: StageInstancePrivacyLevel.GuildOnly,
+                sendStartNotification: false,
+                topic: `Team B-${this.matchNumber}`,
+            })
 
             let teamAStr = "";
             let teamBStr = "";

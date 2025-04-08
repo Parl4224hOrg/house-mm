@@ -1,6 +1,27 @@
 import {OverwriteResolvable, PermissionsBitField, Role} from "discord.js";
 import tokens from "../tokens";
 
+export const getStagePerms = (role: Role | string): OverwriteResolvable[] => {
+    const perms: OverwriteResolvable[] = [];
+    perms.push({
+        id: (role instanceof Role) ? role.id : role,
+        allow: [
+            PermissionsBitField.Flags.SendMessages,
+            PermissionsBitField.Flags.ReadMessageHistory,
+            PermissionsBitField.Flags.ViewChannel,
+            PermissionsBitField.Flags.UseApplicationCommands,
+            PermissionsBitField.Flags.Connect,
+            PermissionsBitField.Flags.UseVAD,
+            PermissionsBitField.Flags.Stream,
+            PermissionsBitField.Flags.Speak,
+        ],
+        type: 0,
+    });
+    perms.push(modPerms, stageEveryone, mutedPerms);
+
+    return perms;
+
+}
 
 export const getAcceptPerms = (acceptRole: Role | string): OverwriteResolvable[] => {
     const perms: OverwriteResolvable[] = [];
@@ -66,4 +87,17 @@ const mutedPerms: OverwriteResolvable = {
     id: tokens.MutedRole,
     deny: [PermissionsBitField.Flags.SendMessages],
     type: 0,
+}
+
+const stageEveryone: OverwriteResolvable = {
+    id: tokens.GuildID,
+    allow: [
+        PermissionsBitField.Flags.Connect,
+        PermissionsBitField.Flags.ViewChannel,
+    ],
+    deny: [
+        PermissionsBitField.Flags.AttachFiles,
+        PermissionsBitField.Flags.EmbedLinks,
+        PermissionsBitField.Flags.RequestToSpeak,
+    ]
 }

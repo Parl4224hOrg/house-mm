@@ -3,7 +3,6 @@ import {ButtonInteraction, ChatInputCommandInteraction, Client, EmbedBuilder, Te
 import {Data} from "../data";
 import tokens from "../tokens";
 import {logInfo} from "../loggers";
-import {MapData} from "../interfaces/Internal";
 import mapModel from "../database/models/MapModel";
 
 export const getMapsDB = async (limit: number = tokens.VoteSize) => {
