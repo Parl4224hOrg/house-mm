@@ -2,7 +2,6 @@ import {EmbedBuilder} from "discord.js";
 import {GameUser} from "../interfaces/Game";
 import {GameInt} from "../database/models/GameModel";
 import {GameController} from "../controllers/GameController";
-import {Data} from "../data";
 import {MapInt} from "../database/models/MapModel";
 
 export const matchFinalEmbed = (game: GameInt, users: GameUser[], mapData: MapInt) => {
