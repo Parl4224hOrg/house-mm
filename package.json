@@ -1,7 +1,7 @@
 {
   "name": "shack-mm",
   "version": "0.0.1",
-  "description": "discord bot for breachers match making",
+  "description": "discord bot for pavlov house match making",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Parl4224h/shack-mm.git"
+    "url": "git+https://github.com/Parl4224hOrg/house-mm.git"
   },
   "author": "parl4224h",
   "license": "ISC",
