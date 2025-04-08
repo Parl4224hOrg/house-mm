@@ -8,12 +8,11 @@ export default {
     BotToken: process.env.BOT_TOKEN ?? '',
     DB_URI: process.env.DB_URI ?? '',
     ClientID: process.env.CLIENT_ID ?? '',
-    BotKey: process.env.BOT_KEY ?? 'no-key',
     ServerKey: process.env.SERVER_KEY ?? 'no-key',
     // Discord stuff
     GuildID: '1203198852195418172',
     Parl: '484100069688344606',
-    LogChannel: '1250198758625382420',
+    LogChannel: '1359213210447908874',
     MasterGuild: '1204816540231401472',
     MatchCategory: '1203198854334382080',
     ModRole: '1203198852241297453',
