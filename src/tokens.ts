@@ -28,7 +28,7 @@ export default {
     LossEmoji: '<:Loss:1174459377709764800>',
     DrawEmoji: '<:Draw:1174459379114848336>',
     ActiveGamesChannel: "1359197136775807166",
-    LeaderboardMessage: "1183920824164569130",
+    LeaderboardMessage: "1359213685121220739",
     LeaderboardChannel: "1294347495983415327",
     GameLogChannel: "1359197477844029731",
     QueueLogChannel: "1359197564259401819",
