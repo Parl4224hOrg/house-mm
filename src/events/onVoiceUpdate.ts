@@ -1,4 +1,4 @@
-import {ChannelType, StageChannel, VoiceState} from "discord.js";
+import {ChannelType, VoiceState} from "discord.js";
 import {logWarn} from "../loggers";
 import {Data} from "../data";
 import tokens from "../tokens";
